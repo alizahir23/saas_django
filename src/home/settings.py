@@ -27,7 +27,8 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("1", "true", "yes")
+# DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("1", "true", "yes")
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".railway.app", # Railway.app wildcard domain
