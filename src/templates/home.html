@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Home aagain</h1>
+<p>Visits: {{ visits.count }}</p>
+{% endblock content %}
+
+{% block title %}Home - {{ block.super }}{% endblock title %}
