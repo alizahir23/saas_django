@@ -13,8 +13,8 @@ ENV PATH=/opt/venv/bin:$PATH
 RUN pip install --upgrade pip
 
 # Set Python-related environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Install os dependencies for our mini vm
 RUN apt-get update && apt-get install -y \
@@ -43,17 +43,10 @@ COPY ./src /code
 # Install the Python project requirements
 RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
-RUN pip install gunicorn rav --upgrade
 
-ARG DJANGO_SECRET_KEY
-ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-
+# Non-secret defaults for collectstatic at build time; override at runtime via Railway.
 ARG DJANGO_DEBUG=0
 ENV DJANGO_DEBUG=${DJANGO_DEBUG}
-
-
-COPY ./rav.yaml /tmp/rav.yaml
-RUN rav download staticfiles_prod -f /tmp/rav.yaml
 
 # database isn't available during build
 # run any other commands that do not need the database
@@ -82,6 +75,5 @@ RUN apt-get remove --purge -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Run the Django project via the runtime script
-# when the container starts
-CMD ./paracord_runner.sh
+# Run the Django project via the runtime script when the container starts
+CMD ["./paracord_runner.sh"]
