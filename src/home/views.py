@@ -9,3 +9,9 @@ def home_page_view(request, *args, **kwargs):
     PageVisit.objects.create(path=request.path)
     queryset = PageVisit.objects.all().order_by('-timestamp')
     return render(request, html_template, {'page_title': 'Home', 'visits': queryset})
+
+def about_page_view(request, *args, **kwargs):
+    html_template = 'home.html'
+    PageVisit.objects.create(path=request.path)
+    queryset = PageVisit.objects.all().order_by('-timestamp')
+    return render(request, html_template, {'page_title': 'About', 'visits': queryset})
