@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import string
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -94,6 +95,20 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASE_URL  = config("DATABASE_URL", cast=str)
+CONN_MAX_AGE = config("CONN_MAX_AGE", cast=int, default=30)
+
+if DATABASE_URL is not None:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_health_checks=True,
+            conn_max_age=CONN_MAX_AGE,
+        )
+
+    }
 
 
 # Password validation
