@@ -48,6 +48,12 @@ RUN pip install -r /tmp/requirements.txt
 ARG DJANGO_DEBUG=0
 ENV DJANGO_DEBUG=${DJANGO_DEBUG}
 
+# collectstatic loads Django settings. Railway (and most hosts) only inject service env vars
+# at container runtime, not during `docker build`, so SECRET_KEY must exist for this RUN step.
+# Runtime DJANGO_SECRET_KEY from Railway overrides this image default.
+ARG DJANGO_SECRET_KEY=build-only-not-for-production
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+
 # database isn't available during build
 # run any other commands that do not need the database
 # such as:

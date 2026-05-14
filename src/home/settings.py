@@ -31,6 +31,7 @@ DEBUG = False
 DEBUG = config("DJANGO_DEBUG", cast=bool)
 
 print('DEBUG', DEBUG)
+print('DJANGO_SECRET_KEY', SECRET_KEY)
 
 ALLOWED_HOSTS = [
     ".railway.app", # Railway.app wildcard domain
