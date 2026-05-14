@@ -96,10 +96,10 @@ DATABASES = {
     }
 }
 
-DATABASE_URL  = config("DATABASE_URL", cast=str, default="default_for_collectstatic")
+DATABASE_URL  = config("DATABASE_URL", cast=str, default="")
 CONN_MAX_AGE = config("CONN_MAX_AGE", cast=int, default=30)
 
-if DATABASE_URL is not None:
+if DATABASE_URL and DATABASE_URL != "":
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(
