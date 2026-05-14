@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,14 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "django-insecure-uejn3fz-r6!v_**ko^x23aj@-sq^@4pw1+hp8!%k(wh%tons^=",
-)
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
+
+
+DEBUG = False
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("1", "true", "yes")
-DEBUG = True
+DEBUG = config("DJANGO_DEBUG", cast=bool)
+
+print('DEBUG', DEBUG)
 
 ALLOWED_HOSTS = [
     ".railway.app", # Railway.app wildcard domain
