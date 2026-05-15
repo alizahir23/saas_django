@@ -3,3 +3,4 @@ gunicorn
 python_decouple
 psycopg[binary]
 dj-database-url
+requests 
